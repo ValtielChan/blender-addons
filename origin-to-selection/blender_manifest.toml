@@ -1,0 +1,16 @@
+schema_version = "1.0.0"
+
+id = "origin_to_selection"
+version = "1.0.0"
+name = "Origin to Selection"
+tagline = "Origine de l'objet sur la selection en mode edition"
+maintainer = "Fabien"
+type = "add-on"
+
+tags = ["Mesh"]
+
+blender_version_min = "4.2.0"
+
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
