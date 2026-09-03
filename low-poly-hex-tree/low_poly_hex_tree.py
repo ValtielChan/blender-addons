@@ -1,6 +1,6 @@
 bl_info = {
     "name": "Low Poly Hex Tree",
-    "author": "Muware",
+    "author": "Valtiel",
     "version": (1, 4, 3),
     "blender": (4, 2, 0),
     "location": "View3D > Sidebar (N) > Tree",

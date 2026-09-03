@@ -4,7 +4,7 @@ id = "origin_to_selection"
 version = "1.0.0"
 name = "Origin to Selection"
 tagline = "Origine de l'objet sur la selection en mode edition"
-maintainer = "Fabien"
+maintainer = "Valtiel"
 type = "add-on"
 
 tags = ["Mesh"]

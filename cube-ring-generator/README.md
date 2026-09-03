@@ -2,7 +2,7 @@
 
 Generates a ring of randomly sized cubes facing inward, with world-space UVs.
 
-- Author: Muware
+- Author: Valtiel
 - Version: 1.1.0
 - Blender: 4.5.0+
 - Category: Add Mesh

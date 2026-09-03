@@ -1,6 +1,6 @@
 bl_info = {
     "name": "Cube Ring Generator",
-    "author": "Muware",
+    "author": "Valtiel",
     "version": (1, 1, 0),
     "blender": (4, 5, 0),
     "location": "View3D > Sidebar (N) > Cube Ring",

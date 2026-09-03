@@ -1,6 +1,6 @@
 bl_info = {
     "name": "Stair Generator",
-    "author": "Muware",
+    "author": "Valtiel",
     "version": (1, 0, 0),
     "blender": (4, 5, 0),
     "location": "View3D > Sidebar (N) > Stairs",

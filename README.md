@@ -16,8 +16,8 @@ editing shortcut. Tested on Blender 5.1.
 | [Origin to Selection](origin-to-selection/) | `Ctrl+Alt+C`: origin to the center of the selection | — | 4.2+ | `origin-to-selection/` |
 
 <p align="center">
-  <img src="docs/media/curve-railing-generator/deviation.gif" width="32%" alt="Adaptive tessellation">
-  <img src="docs/media/curve-railing-generator/posts.gif" width="32%" alt="Post spacing">
+  <img src="docs/media/stair-generator/steps.gif" width="32%" alt="Staircase step count">
+  <img src="docs/media/curve-railing-generator/posts.gif" width="32%" alt="Railing post spacing">
   <img src="docs/media/noise-surface-generator/octaves.gif" width="32%" alt="fBm octaves">
 </p>
 <p align="center">

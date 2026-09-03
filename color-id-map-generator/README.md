@@ -2,7 +2,7 @@
 
 Bakes a Color ID texture per material from the UV islands, with a hue variation per face.
 
-- Author: Muware
+- Author: Valtiel
 - Version: 1.1.0
 - Blender: 4.5.0+
 - Category: UV

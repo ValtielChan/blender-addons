@@ -4,7 +4,7 @@ A Blender extension that puts the active object's origin (pivot point) at the ce
 current edit-mode selection, without moving the geometry. One shortcut replaces the manual
 cursor + snap + origin-to-cursor sequence.
 
-- Maintainer: Fabien
+- Maintainer: Valtiel
 - Version: 1.0.0
 - Blender: 4.2.0+ (tested on 5.1)
 - Type: extension (add-on), `blender_manifest.toml`

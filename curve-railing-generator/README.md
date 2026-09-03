@@ -12,7 +12,7 @@ Two ways to lay out a path, detected automatically from the spline type:
 - **Bézier curve** — for genuinely curved layouts (a racetrack, a helical ramp). The curve is
   densely sampled, then simplified by angular deviation.
 
-- Author: Muware
+- Author: Valtiel
 - Version: 1.2.0
 - Blender: 4.5.0+
 - Category: Add Mesh

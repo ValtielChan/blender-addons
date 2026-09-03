@@ -1,6 +1,6 @@
 bl_info = {
     "name": "Noise Surface Generator",
-    "author": "Fabien",
+    "author": "Valtiel",
     "version": (1, 0, 0),
     "blender": (4, 0, 0),
     "location": "View3D > Sidebar (N) > Noise Surface",

@@ -1,6 +1,6 @@
 bl_info = {
     "name": "Curve Railing Generator",
-    "author": "Muware",
+    "author": "Valtiel",
     "version": (1, 2, 0),
     "blender": (4, 5, 0),
     "location": "View3D > Sidebar (N) > Railing",

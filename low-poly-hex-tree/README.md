@@ -2,7 +2,7 @@
 
 Procedural low poly tree with curved sections and box-projected UVs.
 
-- Author: Muware
+- Author: Valtiel
 - Version: 1.4.3
 - Blender: 4.2.0+
 - Category: Add Mesh

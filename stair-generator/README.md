@@ -3,7 +3,7 @@
 Generates a solid, manifold, optimized staircase (quads everywhere except the two side n-gons,
 no duplicate vertices, no interior faces).
 
-- Author: Muware
+- Author: Valtiel
 - Version: 1.0.0
 - Blender: 4.5.0+
 - Category: Add Mesh

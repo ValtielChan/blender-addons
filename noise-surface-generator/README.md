@@ -2,7 +2,7 @@
 
 Generates a surface with real-time tweakable Perlin noise, then freezes the result.
 
-- Author: Fabien
+- Author: Valtiel
 - Version: 1.0.0
 - Blender: 4.0.0+
 - Category: Add Mesh
