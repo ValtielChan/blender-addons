@@ -105,14 +105,24 @@ Edit > Preferences > Add-ons > Install, pick `curve_railing_generator.py`, then 
 
 ## Preview
 
+Height, rail count, post spacing — all live:
+
 <p align="center">
-  <img src="../docs/media/curve-railing-generator/deviation.gif" width="49%" alt="Max Deviation 20° to 2°">
-  <img src="../docs/media/curve-railing-generator/corner.gif" width="49%" alt="Corner Radius 0 to 1.6 m">
+  <img src="../docs/media/curve-railing-generator/height.gif" width="32%" alt="Handrail height">
+  <img src="../docs/media/curve-railing-generator/rails.gif" width="32%" alt="Rail count 1 to 5">
+  <img src="../docs/media/curve-railing-generator/posts.gif" width="32%" alt="Post spacing">
+</p>
+
+`Max Deviation` from 24° to 2° on a helical ramp — 641 sampled points collapse to 76 sections at
+6°, and the handrail still reads as smooth:
+
+<p align="center">
+  <img src="../docs/media/curve-railing-generator/deviation.gif" width="66%" alt="Max Deviation">
+  <img src="../docs/media/curve-railing-generator/topology.png" width="32%" alt="Fillet topology">
 </p>
 <p align="center">
-  <img src="../docs/media/curve-railing-generator/hero.png" width="32%" alt="Generated railing">
-  <img src="../docs/media/curve-railing-generator/topology.png" width="32%" alt="Fillet topology">
-  <img src="../docs/media/curve-railing-generator/panel.png" width="32%" alt="Panel">
+  <img src="../docs/media/curve-railing-generator/corner.gif" width="49%" alt="Corner Radius">
+  <img src="../docs/media/curve-railing-generator/hero.png" width="49%" alt="Helical ramp railing">
 </p>
 
 [Full illustrated guide](../docs/GUIDE.md#2-curve-railing-generator)

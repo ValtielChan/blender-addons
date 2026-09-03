@@ -17,14 +17,18 @@ Edit > Preferences > Add-ons > Install, pick `low_poly_hex_tree.py`, then enable
 
 ## Preview
 
+Branch depth, foliage density, seed:
+
 <p align="center">
   <img src="../docs/media/low-poly-hex-tree/growth.gif" width="32%" alt="Growth by branching level">
+  <img src="../docs/media/low-poly-hex-tree/foliage.gif" width="32%" alt="Leaves per branch">
   <img src="../docs/media/low-poly-hex-tree/seeds.gif" width="32%" alt="Seed variation">
-  <img src="../docs/media/low-poly-hex-tree/hero.png" width="32%" alt="Low poly tree">
 </p>
 <p align="center">
+  <img src="../docs/media/low-poly-hex-tree/hero.png" width="32%" alt="Low poly tree">
   <img src="../docs/media/low-poly-hex-tree/variants.png" width="66%" alt="Five seeds">
-  <img src="../docs/media/low-poly-hex-tree/panel.png" width="32%" alt="Panel">
 </p>
+
+Box-projected UVs on the wood, quad foliage: plug in your own bark and leaf atlas.
 
 [Full illustrated guide](../docs/GUIDE.md#3-low-poly-hex-tree)

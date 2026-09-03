@@ -17,11 +17,11 @@ editing shortcut. Tested on Blender 5.1.
 
 <p align="center">
   <img src="docs/media/curve-railing-generator/deviation.gif" width="32%" alt="Adaptive tessellation">
-  <img src="docs/media/stair-generator/angle.gif" width="32%" alt="Staircase slope">
+  <img src="docs/media/curve-railing-generator/posts.gif" width="32%" alt="Post spacing">
   <img src="docs/media/noise-surface-generator/octaves.gif" width="32%" alt="fBm octaves">
 </p>
 <p align="center">
-  <img src="docs/media/low-poly-hex-tree/seeds.gif" width="32%" alt="Procedural trees">
+  <img src="docs/media/low-poly-hex-tree/foliage.gif" width="32%" alt="Procedural trees">
   <img src="docs/media/cube-ring-generator/scatter.gif" width="32%" alt="Cube ring scatter">
   <img src="docs/media/color-id-map-generator/turntable.gif" width="32%" alt="Color ID map">
 </p>

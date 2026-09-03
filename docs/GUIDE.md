@@ -48,23 +48,32 @@ The *Result* panel shows the values actually built and checks Blondel's comfort 
 
 ## 2. Curve Railing Generator
 
-**The only setting that really matters: `Max Deviation`** — the angular budget of one rail
-section. Lower means smoother fillets and more triangles, and the straight runs never gain a
-single subdivision. `Corner Radius` rounds every corner with a **true circular arc**, not a
-Bézier approximation: you drop control points, no handles to manage.
+Drop control points or hand it a curve, and you get a railing: handrail, horizontal rails,
+posts. Everything is a live parameter — height, how many rails, how tight the posts are spaced.
 
 <p align="center">
-  <img src="media/curve-railing-generator/deviation.gif" width="49%" alt="Max Deviation from 20° to 2°">
-  <img src="media/curve-railing-generator/corner.gif" width="49%" alt="Corner Radius from 0 to 1.6 m">
+  <img src="media/curve-railing-generator/height.gif" width="32%" alt="Handrail height">
+  <img src="media/curve-railing-generator/rails.gif" width="32%" alt="Rail count 1 to 5">
+  <img src="media/curve-railing-generator/posts.gif" width="32%" alt="Post spacing 2 m to 0.3 m">
 </p>
 
-The orange wireframe shows where the density goes: concentrated on the arc, absent everywhere
-else.
+**The point of the add-on is `Max Deviation`** — the angular budget of one rail section. It is
+the only setting that really matters: the tessellation follows the curvature, so a straight run
+costs two triangles and a tight turn gets exactly as many as it needs. On this helical ramp, 641
+sampled points collapse to 76 sections at 6°, and the handrail still reads as perfectly smooth.
 
 <p align="center">
-  <img src="media/curve-railing-generator/hero.png" width="32%" alt="Generated railing">
+  <img src="media/curve-railing-generator/deviation.gif" width="66%" alt="Max Deviation from 24° to 2°">
   <img src="media/curve-railing-generator/topology.png" width="32%" alt="Fillet topology">
-  <img src="media/curve-railing-generator/panel.png" width="32%" alt="Railing panel">
+</p>
+
+On a control-point path, every corner is rounded off by a **true circular arc** of the radius you
+ask for — not a Bézier approximation, no handles to manage. Corners whose neighbouring segments
+are too short shrink their own fillet so two never overlap.
+
+<p align="center">
+  <img src="media/curve-railing-generator/corner.gif" width="49%" alt="Corner Radius 0 to 1.8 m">
+  <img src="media/curve-railing-generator/hero.png" width="49%" alt="Helical ramp railing">
 </p>
 
 Measured figures on a "long straight + 90° turn" path:
@@ -80,31 +89,41 @@ Measured figures on a "long straight + 90° turn" path:
 Settings live **on the object**, so Shift+D gives a copy you can edit independently. With *Live
 Update* on, moving a control point in Edit Mode updates the railing in real time.
 
+<p align="center">
+  <img src="media/curve-railing-generator/panel.png" width="66%" alt="Railing panel">
+</p>
+
 **Railing** tab · `curve-railing-generator/curve_railing_generator.py` · [README](../curve-railing-generator/README.md)
 
 ---
 
 ## 3. Low Poly Hex Tree
 
-**Branch Depth** grows the tree one level at a time — 28 faces for the bare trunk, 4598 at five
-levels with foliage. And one integer changes everything: same settings, sixteen seeds.
+**Branch Depth** grows the tree one level at a time — 25 faces for the bare trunk, 3410 at five
+levels. **Leaves per Branch** fills the crown. And one integer reshuffles everything: same
+settings, sixteen seeds.
 
 <p align="center">
   <img src="media/low-poly-hex-tree/growth.gif" width="32%" alt="Growth by branching level">
+  <img src="media/low-poly-hex-tree/foliage.gif" width="32%" alt="Leaves per branch 0 to 10">
   <img src="media/low-poly-hex-tree/seeds.gif" width="32%" alt="Seed variation">
-  <img src="media/low-poly-hex-tree/hero.png" width="32%" alt="Low poly tree">
 </p>
 
-Sections are curved by parallel transport, so no twist ever accumulates along a branch. Quad
-foliage, box-projected UVs. Enough to fill a set without ever getting two identical trees.
+Sections are curved by parallel transport, so no twist ever accumulates along a branch. Foliage
+is quads with box-projected UVs on the wood — plug in your own bark and leaf atlas and it takes
+them straight away.
 
 <p align="center">
+  <img src="media/low-poly-hex-tree/hero.png" width="32%" alt="Low poly tree">
   <img src="media/low-poly-hex-tree/variants.png" width="66%" alt="Five trees, five seeds">
-  <img src="media/low-poly-hex-tree/panel.png" width="32%" alt="Tree panel">
 </p>
 
 Every branching level has its own settings (branch count, polygon sides, sections, taper, curve
 noise), copyable from one level to all the others in one click.
+
+<p align="center">
+  <img src="media/low-poly-hex-tree/panel.png" width="66%" alt="Tree panel">
+</p>
 
 **Tree** tab · `low-poly-hex-tree/low_poly_hex_tree.py` · [README](../low-poly-hex-tree/README.md)
 
