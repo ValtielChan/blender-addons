@@ -708,7 +708,7 @@ class RAILGEN_OT_freeze(bpy.types.Operator):
         orphan = curve_obj is not None and not any(
             o.railing_props.curve == curve_obj for o in bpy.data.objects if is_railing(o))
         self.report({'INFO'}, f"'{obj.name}' frozen"
-                    + (f" — path '{curve_obj.name}' is now unused" if orphan else ""))
+                    + (f", path '{curve_obj.name}' is now unused" if orphan else ""))
         return {'FINISHED'}
 
 

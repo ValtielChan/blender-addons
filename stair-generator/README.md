@@ -29,7 +29,7 @@ Settings are stored **on the object**, not on the scene: every staircase keeps i
   exactly) or by a direct step count.
 - **Depth**: tread depth given directly, or derived from the slope angle.
 - *Result* panel: the values actually built (step count, riser, going, angle, length) plus a
-  Blondel comfort check (2h + g = 60–64 cm).
+  Blondel comfort check (2h + g = 60-64 cm).
 
 No arbitrary limits: only geometrically absurd values are rejected (zero or negative
 dimensions, an angle of 0° or 90°).

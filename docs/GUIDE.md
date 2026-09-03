@@ -8,7 +8,7 @@ Every image below is a real EEVEE render of the geometry the add-ons produce, no
 
 ## Installation
 
-**`.py` scripts (classic add-ons)** — everything except Origin to Selection:
+**`.py` scripts (classic add-ons)**, everything except Origin to Selection:
 `Edit > Preferences > Add-ons` > ▾ menu (top right) > `Install from Disk`, pick the `.py` inside
 the folder you want, then tick its checkbox.
 
@@ -22,7 +22,7 @@ Each add-on puts its panel in the 3D view *sidebar* (**N** key), on its own vert
 ## 1. Stair Generator
 
 Slope angle drives the going (`going = riser / tan(angle)`). Riser height drives the step count,
-rounded so the total height lands exactly — the actual riser is always an exact divisor of the
+rounded so the total height lands exactly, so the actual riser is always an exact divisor of the
 height you asked for.
 
 <p align="center">
@@ -49,7 +49,7 @@ The *Result* panel shows the values actually built and checks Blondel's comfort 
 ## 2. Curve Railing Generator
 
 Drop control points or hand it a curve, and you get a railing: handrail, horizontal rails,
-posts. Everything is a live parameter — height, how many rails, how tight the posts are spaced.
+posts. Everything is a live parameter: height, how many rails, how tight the posts are spaced.
 
 <p align="center">
   <img src="media/curve-railing-generator/height.gif" width="32%" alt="Handrail height">
@@ -57,7 +57,7 @@ posts. Everything is a live parameter — height, how many rails, how tight the 
   <img src="media/curve-railing-generator/posts.gif" width="32%" alt="Post spacing 2 m to 0.3 m">
 </p>
 
-**The point of the add-on is `Max Deviation`** — the angular budget of one rail section. It is
+**The point of the add-on is `Max Deviation`**, the angular budget of one rail section. It is
 the only setting that really matters: the tessellation follows the curvature, so a straight run
 costs two triangles and a tight turn gets exactly as many as it needs. On this helical ramp, 641
 sampled points collapse to 76 sections at 6°, and the handrail still reads as perfectly smooth.
@@ -68,7 +68,7 @@ sampled points collapse to 76 sections at 6°, and the handrail still reads as p
 </p>
 
 On a control-point path, every corner is rounded off by a **true circular arc** of the radius you
-ask for — not a Bézier approximation, no handles to manage. Corners whose neighbouring segments
+ask for, not a Bézier approximation, and no handles to manage. Corners whose neighbouring segments
 are too short shrink their own fillet so two never overlap.
 
 <p align="center">
@@ -99,7 +99,7 @@ Update* on, moving a control point in Edit Mode updates the railing in real time
 
 ## 3. Low Poly Hex Tree
 
-**Branch Depth** grows the tree one level at a time — 25 faces for the bare trunk, 3410 at five
+**Branch Depth** grows the tree one level at a time: 25 faces for the bare trunk, 3410 at five
 levels. **Leaves per Branch** fills the crown. And one integer reshuffles everything: same
 settings, sixteen seeds.
 
@@ -110,7 +110,7 @@ settings, sixteen seeds.
 </p>
 
 Sections are curved by parallel transport, so no twist ever accumulates along a branch. Foliage
-is quads with box-projected UVs on the wood — plug in your own bark and leaf atlas and it takes
+is quads with box-projected UVs on the wood, so you can plug in your own bark and leaf atlas and it takes
 them straight away.
 
 <p align="center">
@@ -131,7 +131,7 @@ noise), copyable from one level to all the others in one click.
 
 ## 4. Noise Surface Generator
 
-**Octaves stack detail** — one gives big soft hills, six gives a full relief, each octave adding
+**Octaves stack detail**: one gives big soft hills, six gives a full relief, each octave adding
 a frequency twice as high at half the amplitude. **Scale sets feature size**, from mountain
 range down to pebble.
 
@@ -141,7 +141,7 @@ range down to pebble.
 </p>
 
 **Seamless mode** samples the noise on a 4D torus: since a circle closes on itself, the surface
-is identical along opposite edges. Below, the same tile repeated 3×3 — no seam.
+is identical along opposite edges. Below, the same tile repeated 3×3, with no seam.
 
 <p align="center">
   <img src="media/noise-surface-generator/hero.png" width="32%" alt="Generated terrain">
@@ -182,7 +182,7 @@ min/max scale per axis (or uniform).
 
 ## 6. Color ID Map Generator
 
-One click on *Generate Color ID Map* — here 82 UV islands detected across 2314 faces. Every
+One click on *Generate Color ID Map*, and here 82 UV islands are detected across 2314 faces. Every
 island gets its hue, every face a variation around that hue, so you can select either a whole
 part or one precise face with the same mask.
 
@@ -209,7 +209,7 @@ Useful to drive a material mask in Substance Painter or any texturing shader.
 ## 7. Origin to Selection
 
 The small tool you reach for a hundred times a day. In edit mode, `Ctrl + Alt + C` puts the
-object origin at the center of the current selection, without moving the geometry — and
+object origin at the center of the current selection, without moving the geometry, and
 everything that follows (rotation, scale, snapping) pivots around that point.
 
 <p align="center">
