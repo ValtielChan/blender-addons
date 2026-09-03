@@ -4,7 +4,7 @@ bl_info = {
     "version": (1, 0, 0),
     "blender": (4, 0, 0),
     "location": "View3D > Sidebar (N) > Noise Surface",
-    "description": "Genere une surface avec bruit de Perlin parametrable en temps reel, puis fige le resultat",
+    "description": "Generate a surface with real-time tweakable Perlin noise, then freeze the result",
     "category": "Add Mesh",
 }
 
@@ -24,10 +24,10 @@ from bpy.types import Panel, Operator, PropertyGroup
 
 
 # ============================================================
-# CALCUL DU BRUIT
+# NOISE
 # ============================================================
 def fbm(x, y, octaves, lacunarity, persistence):
-    """Fractal Brownian Motion base sur le Perlin natif de Blender (mode plat)."""
+    """Fractal Brownian Motion on top of Blender's native Perlin noise (flat mode)."""
     total = 0.0
     amplitude = 1.0
     freq = 1.0
@@ -41,19 +41,19 @@ def fbm(x, y, octaves, lacunarity, persistence):
     return total / max_amp if max_amp > 0 else 0.0
 
 
-# Constante : rayon des cercles pour l'echantillonnage torique.
-# Une valeur faible garde le bruit lisible ; elle est arbitraire mais coherente.
+# Constant: radius of the circles used for toroidal sampling.
+# A small value keeps the noise readable; arbitrary but consistent.
 _TORUS_R = 1.0 / (2.0 * math.pi)
 
 
 def fbm_seamless(u, v, reps, octaves, lacunarity, persistence, ox, oy):
-    """FBM tileable.
+    """Tileable fBm.
 
-    u, v sont des coordonnees normalisees dans [0, 1] sur la surface.
-    On les enroule sur deux cercles (un tore en 4D) : comme un cercle se
-    referme, le bruit est identique a u=0 et u=1 (idem pour v), donc la
-    surface se repete sans couture. 'reps' = nombre de repetitions du motif
-    sur la largeur ; il DOIT etre entier pour que le tiling reste valide.
+    u, v are normalized coordinates in [0, 1] over the surface. They are
+    wrapped onto two circles (a 4D torus): since a circle closes on itself,
+    the noise is identical at u=0 and u=1 (same for v), so the surface
+    repeats seamlessly. 'reps' = number of pattern repeats across the width;
+    it MUST be a whole number for the tiling to stay valid.
     """
     total = 0.0
     amplitude = 1.0
@@ -65,13 +65,13 @@ def fbm_seamless(u, v, reps, octaves, lacunarity, persistence, ox, oy):
 
     for _ in range(octaves):
         r = _TORUS_R * reps * freq
-        # 4 coordonnees : les deux axes enroules chacun sur un cercle
+        # 4 coordinates: each axis wrapped onto its own circle
         nx = ox + r * math.cos(angle_u)
         ny = oy + r * math.sin(angle_u)
         nz = r * math.cos(angle_v)
         nw = r * math.sin(angle_v)
-        # mathutils.noise ne fait que de la 3D : on combine deux echantillons
-        # decales pour approximer la 4e dimension proprement.
+        # mathutils.noise is 3D only: combine two offset samples to
+        # approximate the 4th dimension cleanly.
         n1 = noise.noise(mathutils.Vector((nx, ny, nz)))
         n2 = noise.noise(mathutils.Vector((nz, nw, nx)))
         n = (n1 + n2) * 0.5
@@ -83,7 +83,7 @@ def fbm_seamless(u, v, reps, octaves, lacunarity, persistence, ox, oy):
 
 
 def rebuild_surface(obj):
-    """Reconstruit la geometrie du mesh a partir des proprietes stockees sur l'objet."""
+    """Rebuild the mesh geometry from the properties stored on the object."""
     if obj is None or obj.type != 'MESH':
         return
     p = obj.noise_surface
@@ -148,10 +148,10 @@ def rebuild_surface(obj):
 
 
 # ============================================================
-# CALLBACK LIVE
+# LIVE CALLBACK
 # ============================================================
 def update_callback(self, context):
-    """Appele a chaque modification d'un slider quand le live est actif."""
+    """Called on every slider change while live update is on."""
     obj = context.active_object
     if obj is None or obj.type != 'MESH':
         return
@@ -163,51 +163,51 @@ def update_callback(self, context):
 
 
 # ============================================================
-# PROPRIETES STOCKEES SUR L'OBJET
+# PROPERTIES STORED ON THE OBJECT
 # ============================================================
 class NoiseSurfaceProps(PropertyGroup):
     is_noise_surface: BoolProperty(default=False)
     live_update: BoolProperty(
-        name="Mise a jour live",
+        name="Live Update",
         default=True,
         update=update_callback,
     )
 
-    size_x: FloatProperty(name="Taille X", default=10.0, min=0.1, update=update_callback)
-    size_y: FloatProperty(name="Taille Y", default=10.0, min=0.1, update=update_callback)
+    size_x: FloatProperty(name="Size X", default=10.0, min=0.1, update=update_callback)
+    size_y: FloatProperty(name="Size Y", default=10.0, min=0.1, update=update_callback)
     subdivisions: IntProperty(name="Subdivisions", default=100, min=1, max=1000, update=update_callback)
 
-    noise_scale: FloatProperty(name="Echelle", default=2.0, min=0.001, update=update_callback)
-    frequency: FloatProperty(name="Frequence", default=1.0, min=0.0, update=update_callback)
+    noise_scale: FloatProperty(name="Scale", default=2.0, min=0.001, update=update_callback)
+    frequency: FloatProperty(name="Frequency", default=1.0, min=0.0, update=update_callback)
     octaves: IntProperty(name="Octaves", default=4, min=1, max=12, update=update_callback)
-    lacunarity: FloatProperty(name="Lacunarite", default=2.0, min=0.0, update=update_callback)
-    persistence: FloatProperty(name="Persistance", default=0.5, min=0.0, max=1.0, update=update_callback)
+    lacunarity: FloatProperty(name="Lacunarity", default=2.0, min=0.0, update=update_callback)
+    persistence: FloatProperty(name="Persistence", default=0.5, min=0.0, max=1.0, update=update_callback)
 
     seamless: BoolProperty(
         name="Seamless (tileable)",
-        description="La surface se repete sans couture sur les deux axes horizontaux",
+        description="The surface repeats seamlessly on both horizontal axes",
         default=False,
         update=update_callback,
     )
     repetitions: IntProperty(
         name="Repetitions",
-        description="Nombre de repetitions du motif sur la largeur (doit etre entier pour le tiling). Remplace la frequence en mode seamless",
+        description="Number of pattern repeats across the width (must be a whole number for tiling). Replaces frequency in seamless mode",
         default=2, min=1, max=64,
         update=update_callback,
     )
 
-    height_min: FloatProperty(name="Hauteur min", default=0.0, update=update_callback)
-    height_max: FloatProperty(name="Hauteur max", default=2.0, update=update_callback)
+    height_min: FloatProperty(name="Height Min", default=0.0, update=update_callback)
+    height_max: FloatProperty(name="Height Max", default=2.0, update=update_callback)
 
     seed_offset: FloatVectorProperty(name="Seed (offset)", size=2, default=(0.0, 0.0), update=update_callback)
 
 
 # ============================================================
-# OPERATEURS
+# OPERATORS
 # ============================================================
 class NOISESURF_OT_create(Operator):
     bl_idname = "noise_surface.create"
-    bl_label = "Creer une surface de bruit"
+    bl_label = "New Noise Surface"
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
@@ -227,7 +227,7 @@ class NOISESURF_OT_create(Operator):
 
 class NOISESURF_OT_regenerate(Operator):
     bl_idname = "noise_surface.regenerate"
-    bl_label = "Regenerer"
+    bl_label = "Regenerate"
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
@@ -237,8 +237,8 @@ class NOISESURF_OT_regenerate(Operator):
 
 class NOISESURF_OT_freeze(Operator):
     bl_idname = "noise_surface.freeze"
-    bl_label = "Figer la surface"
-    bl_description = "Verrouille le resultat : desactive le live et retire le marqueur, la surface devient un mesh normal"
+    bl_label = "Freeze Surface"
+    bl_description = "Lock the result: turns off live update and drops the marker, the surface becomes a plain mesh"
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
@@ -246,12 +246,12 @@ class NOISESURF_OT_freeze(Operator):
         if obj and obj.noise_surface.is_noise_surface:
             obj.noise_surface.live_update = False
             obj.noise_surface.is_noise_surface = False
-            self.report({'INFO'}, "Surface figee : c'est maintenant un mesh standard.")
+            self.report({'INFO'}, "Surface frozen: it is now a standard mesh.")
         return {'FINISHED'}
 
 
 # ============================================================
-# PANNEAU UI
+# UI PANEL
 # ============================================================
 class NOISESURF_PT_panel(Panel):
     bl_label = "Noise Surface"
@@ -267,8 +267,8 @@ class NOISESURF_PT_panel(Panel):
         layout.operator("noise_surface.create", icon='MESH_GRID')
 
         if obj is None or obj.type != 'MESH' or not obj.noise_surface.is_noise_surface:
-            layout.label(text="Selectionne une surface de bruit")
-            layout.label(text="ou cree-en une.")
+            layout.label(text="Select a noise surface")
+            layout.label(text="or create a new one.")
             return
 
         p = obj.noise_surface
@@ -279,13 +279,13 @@ class NOISESURF_PT_panel(Panel):
             row.operator("noise_surface.regenerate", text="", icon='FILE_REFRESH')
 
         box = layout.box()
-        box.label(text="Maillage", icon='MESH_DATA')
+        box.label(text="Mesh", icon='MESH_DATA')
         box.prop(p, "size_x")
         box.prop(p, "size_y")
         box.prop(p, "subdivisions")
 
         box = layout.box()
-        box.label(text="Bruit", icon='FORCE_TURBULENCE')
+        box.label(text="Noise", icon='FORCE_TURBULENCE')
         box.prop(p, "seamless", toggle=True, icon='UV_SYNC_SELECT')
         if p.seamless:
             box.prop(p, "repetitions")
@@ -298,7 +298,7 @@ class NOISESURF_PT_panel(Panel):
         box.prop(p, "seed_offset")
 
         box = layout.box()
-        box.label(text="Hauteur", icon='ARROW_LEFTRIGHT')
+        box.label(text="Height", icon='ARROW_LEFTRIGHT')
         box.prop(p, "height_min")
         box.prop(p, "height_max")
 
@@ -307,7 +307,7 @@ class NOISESURF_PT_panel(Panel):
 
 
 # ============================================================
-# ENREGISTREMENT
+# REGISTRATION
 # ============================================================
 classes = (
     NoiseSurfaceProps,

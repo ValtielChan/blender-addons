@@ -1,88 +1,118 @@
 # Curve Railing Generator
 
-Génère une barrière (rambarde + barreaux) le long d'un tracé, avec une tessellation **adaptative à la courbure** : de la géométrie dans les virages, presque rien sur les parties droites.
+Generates a railing (handrail + posts) along a path, with **curvature-adaptive tessellation**:
+geometry in the corners, almost nothing on the straight runs.
 
-Deux façons de tracer, détectées automatiquement d'après le type de spline :
+Two ways to lay out a path, detected automatically from the spline type:
 
-- **Points de contrôle** (courbe POLY, ou Bézier à poignées Vector) — le mode recommandé pour une rambarde. Tu poses juste des points « la rampe va de là à là, puis change de direction », et chaque angle est arrondi tout seul par un **arc de cercle** du rayon demandé. Aucune poignée, aucun poids à gérer.
-- **Courbe de Bézier** — pour les tracés vraiment courbes (circuit, rampe hélicoïdale). La courbe est échantillonnée dense puis simplifiée par déviation angulaire.
+- **Control points** (POLY curve, or Bézier with Vector handles) — the recommended mode for a
+  railing. You just drop points, "the rail goes from here to there, then changes direction",
+  and every corner is rounded off on its own by a **circular arc** of the radius you asked for.
+  No handles, no weights to manage.
+- **Bézier curve** — for genuinely curved layouts (a racetrack, a helical ramp). The curve is
+  densely sampled, then simplified by angular deviation.
 
-- Auteur : Muware
-- Version : 1.2.0
-- Blender : 4.5.0+
-- Catégorie : Add Mesh
-- Emplacement : View3D > Sidebar (N) > Railing
-- Fichier : `curve_railing_generator.py`
+- Author: Muware
+- Version: 1.2.0
+- Blender: 4.5.0+
+- Category: Add Mesh
+- Location: View3D > Sidebar (N) > **Railing**
+- File: `curve_railing_generator.py`
 
-## Utilisation
+## Usage
 
-1. Panneau *Railing* > **New Railing Path** : crée un tracé à 2 points au curseur 3D + sa barrière, et te dépose en Edit Mode sur le tracé, dernier point sélectionné.
-2. **E** pour extruder le point suivant, autant de fois que nécessaire. Chaque angle s'arrondit automatiquement.
-3. Régler les paramètres dans le panneau, ça se régénère en direct.
+1. *Railing* panel > **New Railing Path**: creates a 2-point path at the 3D cursor along with
+   its railing, and drops you into Edit Mode on the path with the last point selected.
+2. **E** to extrude the next point, as many times as needed. Every corner rounds itself off.
+3. Tweak the settings in the panel; it regenerates live.
 
-Le panneau reste utilisable pendant l'édition du tracé : sélectionner la courbe affiche les réglages de sa barrière. Bouton **Edit Path** pour y retourner depuis la barrière.
+The panel stays usable while editing the path: selecting the curve shows its railing's
+settings. The **Edit Path** button takes you back there from the railing.
 
-**Freeze** coupe le lien avec le générateur : le mesh est conservé tel quel, il cesse de suivre son tracé et l'add-on ne le reconnaît plus. C'est un aller simple (Ctrl+Z pour revenir en arrière), les paramètres sont perdus. Le tracé n'est pas supprimé — s'il ne sert plus à rien, le message d'info te le signale et tu le supprimes toi-même.
+**Freeze** cuts the link with the generator: the mesh is kept as is, it stops following its
+path, and the add-on no longer recognizes it. This is one-way (Ctrl+Z to undo), and the
+settings are lost. The path is not deleted — if it is no longer useful the info message says
+so, and you delete it yourself.
 
-Pour partir d'une courbe existante : la sélectionner, puis **From Active Curve**.
+To start from an existing curve: select it, then **From Active Curve**.
 
-La courbe donne la **ligne de base** (au sol) : la rambarde est posée à `Height` au-dessus, les barreaux montent du sol jusqu'à l'axe de la rambarde.
+The curve gives the **base line** (on the ground): the handrail sits `Height` above it, and the
+posts run from the ground up to the handrail axis.
 
-Les paramètres sont stockés **sur l'objet** : chaque barrière garde ses propres réglages, et Shift+D donne une copie éditable indépendamment.
+Settings are stored **on the object**: every railing keeps its own, and Shift+D gives a copy
+you can edit independently.
 
-Avec **Live Update** actif, la barrière se régénère aussi bien sur changement de paramètre que pendant l'édition de la courbe : déplacer un point de contrôle en Edit Mode met la barrière à jour en direct (handler `depsgraph_update_post`). Le bouton **Rebuild** reste là pour forcer une reconstruction.
+With **Live Update** on, the railing regenerates both on a settings change and while editing
+the curve: moving a control point in Edit Mode updates the railing in real time
+(`depsgraph_update_post` handler). The **Rebuild** button is still there to force a rebuild.
 
-## Paramètres
+## Parameters
 
-**Rambarde** — hauteur de l'axe, rayon du tube, résolution radiale, et nombre de lisses horizontales (`Rails` > 1 ajoute des lisses réparties entre le sol et la hauteur).
+**Handrail** — axis height, tube radius, radial resolution, and number of horizontal rails
+(`Rails` > 1 adds rails spread between the ground and the height).
 
-**Barreaux** — espacement cible (ajusté pour tomber juste sur la longueur de la courbe), rayon, résolution radiale, et `Sink` pour les enfoncer sous le sol.
+**Posts** — target spacing (adjusted to land exactly on the curve length), radius, radial
+resolution, and `Sink` to push them below the ground.
 
-**Optimization** — le cœur de l'add-on :
-- `Max Deviation` : le budget angulaire d'une section de rambarde. C'est le seul réglage qui compte vraiment : plus bas = virages plus lisses et plus de triangles.
-- `Corner Radius` (mode points de contrôle) : rayon de l'arc qui arrondit chaque angle. Réduit automatiquement sur un angle dont les segments voisins sont trop courts, pour que deux congés ne se chevauchent jamais. À 0, les angles restent vifs.
-- `Max Section` (mode courbe) : longueur maxi d'une section en ligne droite. Ne sert qu'à empêcher une ligne parfaitement droite de devenir une seule arête gigantesque.
+**Optimization** — the heart of the add-on:
+- `Max Deviation`: the angular budget of one rail section. It is the only setting that really
+  matters: lower = smoother corners and more triangles.
+- `Corner Radius` (control-point mode): radius of the arc that rounds off each corner.
+  Automatically shrunk on a corner whose neighbouring segments are too short, so two fillets
+  never overlap. At 0, corners stay sharp.
+- `Max Section` (curve mode): maximum length of a section on a straight run. It only exists to
+  stop a perfectly straight line from becoming one gigantic edge.
 
-Le second réglage affiché dépend du mode détecté — l'autre serait inerte.
+The second setting shown depends on the detected mode — the other one would be inert.
 
-**Result** — triangles, sommets, et le nombre de sections retenues sur le nombre de points échantillonnés (le taux de compression).
+**Result** — triangles, vertices, and how many sections were kept out of how many sampled
+points (the compression ratio).
 
-Ordres de grandeur mesurés :
+Measured figures:
 
-| Tracé | Sections | Triangles |
+| Path | Sections | Triangles |
 |---|---|---|
-| L en angle droit, angles vifs (`Corner Radius` 0) | 4 | 320 |
-| Idem, congés 0.6 m à 8° | 28 | 684 |
-| Idem à 3° | 64 | 1260 |
-| Bézier « long droit + virage 90° », adaptatif 8° | 16 | 472 |
-| Le même Bézier à résolution uniforme équivalente | 161 | 2792 |
+| Right-angle L, sharp corners (`Corner Radius` 0) | 4 | 320 |
+| Same, 0.6 m fillets at 8° | 28 | 684 |
+| Same at 3° | 64 | 1260 |
+| "Long straight + 90° turn" Bézier, adaptive at 8° | 16 | 472 |
+| The same Bézier at equivalent uniform resolution | 161 | 2792 |
 
-## Détails d'implémentation
+## Implementation notes
 
-- Mode points de contrôle : chaque angle devient un **vrai arc de cercle** (pas une approximation de Bézier), découpé en `ceil(angle / Max Deviation)` segments. Le congé produit donc directement la bonne densité, il n'y a pas d'étape de simplification derrière qui la dégraderait.
-- Mode courbe : échantillonnage dense (64 points par segment de Bézier) puis simplification en accumulant l'angle de rotation — le résultat ne dépend pas de la densité d'échantillonnage, seulement de la géométrie réelle.
-- Repère « up fixe » pour le balayage du tube (pas de transport parallèle) : pas de vrille accumulée, et une rambarde est de toute façon toujours à l'endroit.
-- Tubes en quads lissés, bouchons en n-gons plats : le flat/smooth par face suffit, pas besoin d'auto-smooth ni de modifier.
-- Splines cycliques gérées (rambarde fermée, sans bouchons).
-- Le mesh est réécrit en place (`clear_geometry` + `from_pydata`) plutôt que remplacé : pas de création/suppression de datablock depuis un handler depsgraph, et c'est plus rapide.
-- La courbe est lue depuis sa copie évaluée, donc les modifiers de la courbe et l'état d'Edit Mode sont pris en compte (repli sur les données d'origine si la courbe a un bevel, car elle s'évalue alors en mesh).
-- Les splines NURBS sont traitées comme des points de contrôle (congés), pas évaluées en tant que NURBS.
+- Control-point mode: every corner becomes a **true circular arc** (not a Bézier
+  approximation), cut into `ceil(angle / Max Deviation)` segments. The fillet therefore
+  produces the right density directly — there is no later simplification pass to degrade it.
+- Curve mode: dense sampling (64 points per Bézier segment) then simplification by accumulating
+  the turn angle — the result depends only on the actual geometry, not on the sampling density.
+- Fixed "up" frame for the tube sweep (no parallel transport): no accumulated twist, and a
+  railing is always upright anyway.
+- Tubes in smooth quads, caps as flat n-gons: per-face flat/smooth is enough, no auto-smooth
+  and no modifier needed.
+- Cyclic splines handled (closed railing, no caps).
+- The mesh is rewritten in place (`clear_geometry` + `from_pydata`) rather than replaced: no
+  datablock creation or deletion from a depsgraph handler, and it is faster.
+- The curve is read from its evaluated copy, so curve modifiers and Edit Mode state are taken
+  into account (falling back to the original data if the curve has a bevel, since it then
+  evaluates to a mesh).
+- NURBS splines are treated as control points (fillets), not evaluated as NURBS.
 
 ## Installation
-Edit > Preferences > Add-ons > Install, sélectionner `curve_railing_generator.py`, puis activer.
+
+Edit > Preferences > Add-ons > Install, pick `curve_railing_generator.py`, then enable it.
 
 ---
 
-## Aperçu
+## Preview
 
-![Rambarde générée](../docs/media/curve-railing-generator/hero.png)
+<p align="center">
+  <img src="../docs/media/curve-railing-generator/deviation.gif" width="49%" alt="Max Deviation 20° to 2°">
+  <img src="../docs/media/curve-railing-generator/corner.gif" width="49%" alt="Corner Radius 0 to 1.6 m">
+</p>
+<p align="center">
+  <img src="../docs/media/curve-railing-generator/hero.png" width="32%" alt="Generated railing">
+  <img src="../docs/media/curve-railing-generator/topology.png" width="32%" alt="Fillet topology">
+  <img src="../docs/media/curve-railing-generator/panel.png" width="32%" alt="Panel">
+</p>
 
-`Max Deviation` de 20° à 2° — la densité va dans le congé, pas dans les lignes droites :
-
-![Max Deviation](../docs/media/curve-railing-generator/deviation.gif)
-
-`Corner Radius` de 0 à 1,6 m :
-
-![Corner Radius](../docs/media/curve-railing-generator/corner.gif)
-
-[Guide illustré complet](../docs/GUIDE.md#2-curve-railing-generator)
+[Full illustrated guide](../docs/GUIDE.md#2-curve-railing-generator)

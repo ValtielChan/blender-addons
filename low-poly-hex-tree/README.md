@@ -1,29 +1,30 @@
 # Low Poly Hex Tree
 
-Arbre low poly procédural avec sections courbées et UVs en projection box.
+Procedural low poly tree with curved sections and box-projected UVs.
 
-- Auteur : Muware
-- Version : 1.4.3
-- Blender : 4.2.0+
-- Catégorie : Add Mesh
-- Emplacement : View3D > Sidebar (N) > Tree
-- Fichier : `low_poly_hex_tree.py`
-- Provenance : Blender 5.1
+- Author: Muware
+- Version: 1.4.3
+- Blender: 4.2.0+
+- Category: Add Mesh
+- Location: View3D > Sidebar (N) > **Tree**
+- File: `low_poly_hex_tree.py`
+- Origin: Blender 5.1
 
 ## Installation
-Edit > Preferences > Add-ons > Install, sélectionner `low_poly_hex_tree.py`, puis activer.
+Edit > Preferences > Add-ons > Install, pick `low_poly_hex_tree.py`, then enable it.
 
 ---
 
-## Aperçu
+## Preview
 
-![Arbre low poly](../docs/media/low-poly-hex-tree/hero.png)
+<p align="center">
+  <img src="../docs/media/low-poly-hex-tree/growth.gif" width="32%" alt="Growth by branching level">
+  <img src="../docs/media/low-poly-hex-tree/seeds.gif" width="32%" alt="Seed variation">
+  <img src="../docs/media/low-poly-hex-tree/hero.png" width="32%" alt="Low poly tree">
+</p>
+<p align="center">
+  <img src="../docs/media/low-poly-hex-tree/variants.png" width="66%" alt="Five seeds">
+  <img src="../docs/media/low-poly-hex-tree/panel.png" width="32%" alt="Panel">
+</p>
 
-Croissance par niveau de branchement, et variation de seed :
-
-![Croissance](../docs/media/low-poly-hex-tree/growth.gif)
-![Seeds](../docs/media/low-poly-hex-tree/seeds.gif)
-
-![Cinq graines](../docs/media/low-poly-hex-tree/variants.png)
-
-[Guide illustré complet](../docs/GUIDE.md#3-low-poly-hex-tree)
+[Full illustrated guide](../docs/GUIDE.md#3-low-poly-hex-tree)

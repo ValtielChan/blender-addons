@@ -1,271 +1,206 @@
-# Guide des add-ons
+# Add-on guide
 
-Sept add-ons Blender maison, tous testés sur Blender 5.1 (et compatibles 4.x selon la fiche
-de chacun). Six générateurs de géométrie procédurale, un utilitaire de bake, un raccourci
-d'édition.
+Seven Blender add-ons, all tested on Blender 5.1 (and compatible with 4.x according to each
+add-on's own spec). Five procedural geometry generators, one baking utility, one editing
+shortcut.
 
-Toutes les images de ce guide sont des rendus EEVEE réels de la géométrie produite par les
-add-ons, pas des maquettes.
+Every image below is a real EEVEE render of the geometry the add-ons produce, not a mockup.
 
 ## Installation
 
-Deux formats coexistent dans ce dépôt.
+**`.py` scripts (classic add-ons)** — everything except Origin to Selection:
+`Edit > Preferences > Add-ons` > ▾ menu (top right) > `Install from Disk`, pick the `.py` inside
+the folder you want, then tick its checkbox.
 
-**Scripts `.py` (add-ons classiques)** — tous sauf Origin to Selection :
+**Extension (Origin to Selection)**: zip the `origin-to-selection/` folder, then
+`Install from Disk` on the zip.
 
-1. `Edit > Preferences > Add-ons`
-2. Menu ▾ en haut à droite > `Install from Disk`
-3. Sélectionner le `.py` du dossier voulu
-4. Cocher la case pour l'activer
-
-**Extension (Origin to Selection)** : zipper le dossier `origin-to-selection/`, puis
-`Install from Disk` sur le zip.
-
-Chaque add-on pose son panneau dans la *sidebar* de la vue 3D (touche **N**), sur son propre
-onglet vertical. Les captures « panneau » ci-dessous montrent où regarder.
+Each add-on puts its panel in the 3D view *sidebar* (**N** key), on its own vertical tab.
 
 ---
 
 ## 1. Stair Generator
 
-Escalier plein, manifold, en quads partout sauf les deux flancs en n-gons. Aucun sommet
-dupliqué, aucune face interne : sortable tel quel vers un moteur de jeu.
+Slope angle drives the going (`going = riser / tan(angle)`). Riser height drives the step count,
+rounded so the total height lands exactly — the actual riser is always an exact divisor of the
+height you asked for.
 
-![Escalier généré](media/stair-generator/hero.png)
+<p align="center">
+  <img src="media/stair-generator/angle.gif" width="49%" alt="Slope angle sweep">
+  <img src="media/stair-generator/steps.gif" width="49%" alt="Riser height sweep">
+</p>
 
-La topologie, mise en évidence : 15 marches = 64 sommets, 34 faces, dont 32 quads.
+Solid, manifold, quads everywhere except the two side n-gons. No duplicate vertices, no interior
+faces: 15 steps = 64 vertices, 34 faces, 32 of them quads. Exportable to a game engine as is.
 
-![Topologie de l'escalier](media/stair-generator/topology.png)
+<p align="center">
+  <img src="media/stair-generator/hero.png" width="32%" alt="Generated staircase">
+  <img src="media/stair-generator/topology.png" width="32%" alt="Staircase topology">
+  <img src="media/stair-generator/panel.png" width="32%" alt="Stairs panel">
+</p>
 
-**L'angle de pente pilote le giron.** On donne l'angle, la profondeur de marche s'en déduit
-(`giron = contremarche / tan(angle)`), l'escalier se réétire en direct.
+The *Result* panel shows the values actually built and checks Blondel's comfort formula
+(2h + g between 60 and 64 cm).
 
-![Sweep de l'angle de pente](media/stair-generator/angle.gif)
-
-**La hauteur de marche pilote leur nombre.** On donne une hauteur cible, le nombre de marches
-est arrondi pour que la hauteur totale tombe juste — la contremarche réelle est donc toujours
-un diviseur exact de la hauteur demandée.
-
-![Sweep de la hauteur de marche](media/stair-generator/steps.gif)
-
-Le panneau *Result* affiche les valeurs réellement construites et vérifie la formule de
-confort de Blondel (2h + g entre 60 et 64 cm).
-
-![Panneau Stairs](media/stair-generator/panel.png)
-
-Onglet **Stairs** · `stair-generator/stair_generator.py` · [README](../stair-generator/README.md)
+**Stairs** tab · `stair-generator/stair_generator.py` · [README](../stair-generator/README.md)
 
 ---
 
 ## 2. Curve Railing Generator
 
-Rambarde + barreaux le long d'un tracé, avec une tessellation **adaptative à la courbure** :
-de la géométrie dans les virages, presque rien sur les lignes droites.
+**The only setting that really matters: `Max Deviation`** — the angular budget of one rail
+section. Lower means smoother fillets and more triangles, and the straight runs never gain a
+single subdivision. `Corner Radius` rounds every corner with a **true circular arc**, not a
+Bézier approximation: you drop control points, no handles to manage.
 
-![Rambarde générée](media/curve-railing-generator/hero.png)
+<p align="center">
+  <img src="media/curve-railing-generator/deviation.gif" width="49%" alt="Max Deviation from 20° to 2°">
+  <img src="media/curve-railing-generator/corner.gif" width="49%" alt="Corner Radius from 0 to 1.6 m">
+</p>
 
-On pose des points de contrôle (« la rampe va de là à là, puis tourne »), et chaque angle est
-arrondi tout seul par un **vrai arc de cercle** du rayon demandé — pas une approximation de
-Bézier, pas de poignées à gérer.
+The orange wireframe shows where the density goes: concentrated on the arc, absent everywhere
+else.
 
-![Corner Radius de 0 à 1,6 m](media/curve-railing-generator/corner.gif)
+<p align="center">
+  <img src="media/curve-railing-generator/hero.png" width="32%" alt="Generated railing">
+  <img src="media/curve-railing-generator/topology.png" width="32%" alt="Fillet topology">
+  <img src="media/curve-railing-generator/panel.png" width="32%" alt="Railing panel">
+</p>
 
-**Le seul réglage qui compte vraiment : `Max Deviation`.** C'est le budget angulaire d'une
-section de rambarde. Plus il est bas, plus les congés sont lisses et plus il y a de triangles.
-Les parties droites, elles, ne gagnent aucune subdivision quoi qu'il arrive.
+Measured figures on a "long straight + 90° turn" path:
 
-![Max Deviation de 20° à 2°](media/curve-railing-generator/deviation.gif)
-
-Le filaire orange montre où passe la densité : concentrée sur l'arc, absente ailleurs.
-
-![Topologie du congé](media/curve-railing-generator/topology.png)
-
-Ordres de grandeur mesurés sur un tracé « long droit + virage à 90° » :
-
-| Tracé | Sections | Triangles |
+| Path | Sections | Triangles |
 |---|---|---|
-| L en angle droit, angles vifs | 4 | 320 |
-| Idem, congés 0,6 m à 8° | 28 | 684 |
-| Idem à 3° | 64 | 1260 |
-| Bézier adaptatif à 8° | 16 | 472 |
-| Le même Bézier à résolution uniforme équivalente | 161 | 2792 |
+| Right-angle L, sharp corners | 4 | 320 |
+| Same, 0.6 m fillets at 8° | 28 | 684 |
+| Same at 3° | 64 | 1260 |
+| Adaptive Bézier at 8° | 16 | 472 |
+| The same Bézier at equivalent uniform resolution | 161 | 2792 |
 
-Les paramètres sont stockés **sur l'objet** : chaque barrière garde ses réglages, et Shift+D
-donne une copie éditable indépendamment. Avec *Live Update*, déplacer un point de contrôle en
-Edit Mode met la barrière à jour en direct.
+Settings live **on the object**, so Shift+D gives a copy you can edit independently. With *Live
+Update* on, moving a control point in Edit Mode updates the railing in real time.
 
-![Panneau Railing](media/curve-railing-generator/panel.png)
-
-Onglet **Railing** · `curve-railing-generator/curve_railing_generator.py` · [README](../curve-railing-generator/README.md)
+**Railing** tab · `curve-railing-generator/curve_railing_generator.py` · [README](../curve-railing-generator/README.md)
 
 ---
 
 ## 3. Low Poly Hex Tree
 
-Arbre low poly procédural : sections courbées par transport parallèle (donc aucune vrille
-accumulée dans les branches), feuillage en quads, UVs en projection box.
+**Branch Depth** grows the tree one level at a time — 28 faces for the bare trunk, 4598 at five
+levels with foliage. And one integer changes everything: same settings, sixteen seeds.
 
-![Arbre low poly](media/low-poly-hex-tree/hero.png)
+<p align="center">
+  <img src="media/low-poly-hex-tree/growth.gif" width="32%" alt="Growth by branching level">
+  <img src="media/low-poly-hex-tree/seeds.gif" width="32%" alt="Seed variation">
+  <img src="media/low-poly-hex-tree/hero.png" width="32%" alt="Low poly tree">
+</p>
 
-**Branch Depth** fait pousser l'arbre niveau par niveau. 28 faces au tronc nu, 4598 à cinq
-niveaux avec feuillage.
+Sections are curved by parallel transport, so no twist ever accumulates along a branch. Quad
+foliage, box-projected UVs. Enough to fill a set without ever getting two identical trees.
 
-![Croissance par niveau de branchement](media/low-poly-hex-tree/growth.gif)
+<p align="center">
+  <img src="media/low-poly-hex-tree/variants.png" width="66%" alt="Five trees, five seeds">
+  <img src="media/low-poly-hex-tree/panel.png" width="32%" alt="Tree panel">
+</p>
 
-**Un seul entier change tout.** Même paramétrage, seize graines différentes.
+Every branching level has its own settings (branch count, polygon sides, sections, taper, curve
+noise), copyable from one level to all the others in one click.
 
-![Variation de seed](media/low-poly-hex-tree/seeds.gif)
-
-De quoi peupler un décor sans jamais deux arbres identiques.
-
-![Cinq arbres, cinq graines](media/low-poly-hex-tree/variants.png)
-
-Chaque niveau de branchement a ses propres réglages (nombre de branches, côtés du polygone,
-sections, taper, bruit de courbure), copiables d'un niveau à l'autre en un clic.
-
-![Panneau Tree](media/low-poly-hex-tree/panel.png)
-
-Onglet **Tree** · `low-poly-hex-tree/low_poly_hex_tree.py` · [README](../low-poly-hex-tree/README.md)
+**Tree** tab · `low-poly-hex-tree/low_poly_hex_tree.py` · [README](../low-poly-hex-tree/README.md)
 
 ---
 
 ## 4. Noise Surface Generator
 
-Surface déplacée par un bruit de Perlin fractal (fBm), tout paramétrable en temps réel, puis
-figée en mesh standard quand le résultat convient.
+**Octaves stack detail** — one gives big soft hills, six gives a full relief, each octave adding
+a frequency twice as high at half the amplitude. **Scale sets feature size**, from mountain
+range down to pebble.
 
-![Terrain généré](media/noise-surface-generator/hero.png)
+<p align="center">
+  <img src="media/noise-surface-generator/octaves.gif" width="49%" alt="Octaves from 1 to 8">
+  <img src="media/noise-surface-generator/scale.gif" width="49%" alt="Noise scale from 8 to 1.4">
+</p>
 
-**Les octaves empilent le détail.** Une octave = de grandes collines molles ; six = un relief
-complet, chaque octave ajoutant une fréquence deux fois plus haute à amplitude moitié moindre.
+**Seamless mode** samples the noise on a 4D torus: since a circle closes on itself, the surface
+is identical along opposite edges. Below, the same tile repeated 3×3 — no seam.
 
-![Octaves de 1 à 8](media/noise-surface-generator/octaves.gif)
+<p align="center">
+  <img src="media/noise-surface-generator/hero.png" width="32%" alt="Generated terrain">
+  <img src="media/noise-surface-generator/seamless.png" width="32%" alt="3×3 seamless tiling">
+  <img src="media/noise-surface-generator/panel.png" width="32%" alt="Noise Surface panel">
+</p>
 
-**L'échelle règle la taille des motifs** — de la chaîne de montagnes au caillou.
+Everything is tweakable in real time, then *Freeze Surface* turns the result into a standard
+mesh.
 
-![Échelle du bruit de 8 à 1,4](media/noise-surface-generator/scale.gif)
-
-**Mode seamless.** Le bruit est échantillonné sur un tore en 4D : comme un cercle se referme,
-la surface est identique à ses deux bords opposés. Ici la même tuile répétée 3×3 — aucune
-couture.
-
-![Tuilage 3×3 sans couture](media/noise-surface-generator/seamless.png)
-
-![Panneau Noise Surface](media/noise-surface-generator/panel.png)
-
-Onglet **Noise Surface** · `noise-surface-generator/noise_surface_generator.py` · [README](../noise-surface-generator/README.md)
+**Noise Surface** tab · `noise-surface-generator/noise_surface_generator.py` · [README](../noise-surface-generator/README.md)
 
 ---
 
 ## 5. Cube Ring Generator
 
-Anneau de cubes de tailles aléatoires orientés vers l'intérieur, avec des UVs en espace monde
-(une texture tileable garde la même densité sur tous les cubes, quelle que soit leur taille).
+Cube count from 8 to 60, the seed to reroll the distribution, and lateral noise to go from tidy
+ring to field of rubble.
 
-![Anneau de cubes](media/cube-ring-generator/hero.png)
+<p align="center">
+  <img src="media/cube-ring-generator/count.gif" width="32%" alt="Count from 8 to 60">
+  <img src="media/cube-ring-generator/seed.gif" width="32%" alt="Seed variation">
+  <img src="media/cube-ring-generator/scatter.gif" width="32%" alt="Lateral noise from 0 to 0.8">
+</p>
 
-**Le nombre de cubes**, de 8 à 60, en gardant le rayon.
+Cubes face inward and carry world-space UVs, so a tileable texture keeps the same density on
+every cube whatever its size. On top of that: angular spacing jitter, min/max radial offset, and
+min/max scale per axis (or uniform).
 
-![Count de 8 à 60](media/cube-ring-generator/count.gif)
+<p align="center">
+  <img src="media/cube-ring-generator/hero.png" width="49%" alt="Cube ring">
+  <img src="media/cube-ring-generator/panel.png" width="49%" alt="Cube Ring panel">
+</p>
 
-**La graine**, pour rejouer la distribution jusqu'à tomber sur la bonne.
-
-![Variation de seed](media/cube-ring-generator/seed.gif)
-
-**Le bruit latéral**, de l'anneau bien rangé au champ de ruines.
-
-![Lateral Noise de 0 à 0,8](media/cube-ring-generator/scatter.gif)
-
-S'ajoutent le jitter d'espacement angulaire, le décalage radial min/max et les échelles
-min/max par axe (ou uniformes).
-
-![Panneau Cube Ring](media/cube-ring-generator/panel.png)
-
-Onglet **Cube Ring** · `cube-ring-generator/cube_ring_generator.py` · [README](../cube-ring-generator/README.md)
+**Cube Ring** tab · `cube-ring-generator/cube_ring_generator.py` · [README](../cube-ring-generator/README.md)
 
 ---
 
-## 6. Blade Profile Generator
+## 6. Color ID Map Generator
 
-Lame d'épée construite à partir d'un **profil de largeur** : des jalons `(position, largeur)`
-le long de la lame, interpolés linéairement, pointe automatiquement ramenée à 0. Plus
-l'émouture (le tranchant) et la gorge (le fuller) sur les deux faces.
+One click on *Generate Color ID Map* — here 82 UV islands detected across 2314 faces. Every
+island gets its hue, every face a variation around that hue, so you can select either a whole
+part or one precise face with the same mask.
 
-![Lame générée](media/blade-profile-generator/hero.png)
+<p align="center">
+  <img src="media/color-id-map-generator/turntable.gif" width="32%" alt="ID map turntable">
+  <img src="media/color-id-map-generator/before.png" width="32%" alt="Before">
+  <img src="media/color-id-map-generator/applied.png" width="32%" alt="After, ID map applied">
+</p>
 
-Le détail qui fait le boulot : la sortie de gorge arrondie et la ligne d'émouture.
+The texture is exported straight to PNG, up to 8K. *All Materials* bakes one map per material
+slot, with a hue offset between slots so two materials never start from the same color.
 
-![Sortie de gorge et émouture](media/blade-profile-generator/detail.png)
+<p align="center">
+  <img src="media/color-id-map-generator/map.png" width="30%" alt="The baked Color ID map">
+  <img src="media/color-id-map-generator/panel.png" width="62%" alt="Color ID panel">
+</p>
 
-**La gorge se creuse** comme le ferait une fraise ronde : la section est un arc de cercle de
-rayon d'outil constant, et aux extrémités la profondeur remonte en suivant le même arc — d'où
-le contour de sortie arrondi, pas une simple rampe droite.
+Useful to drive a material mask in Substance Painter or any texturing shader.
 
-![Profondeur de gorge](media/blade-profile-generator/fuller.gif)
-
-**L'émouture est proportionnelle** : le méplat central reste une fraction constante de la
-largeur locale, l'émouture suit donc le rétrécissement de la lame au lieu de garder une largeur
-fixe absurde près de la pointe. À 0, le chant reste rectangulaire (lame non affûtée).
-
-![Largeur d'émouture](media/blade-profile-generator/grind.gif)
-
-**Le profil de largeur** se règle jalon par jalon. Deux jalons à la même position créent un
-décroché net — c'est comme ça qu'on fait un ricasso.
-
-![Jalon de largeur médiane](media/blade-profile-generator/profile.gif)
-
-![Panneau Blade](media/blade-profile-generator/panel.png)
-
-Onglet **Blade** · `blade-profile-generator/blade_profile_generator.py` · [README](../blade-profile-generator/README.md)
+**Color ID** tab · `color-id-map-generator/color_id_map_generator.py` · [README](../color-id-map-generator/README.md)
 
 ---
 
-## 7. Color ID Map Generator
+## 7. Origin to Selection
 
-Bake d'une texture Color ID par matériau, à partir des îlots UV, avec une variation de teinte
-par face à l'intérieur de chaque îlot. Utile pour piloter un masque de matériaux dans Substance
-Painter ou n'importe quel shader de texturing.
+The small tool you reach for a hundred times a day. In edit mode, `Ctrl + Alt + C` puts the
+object origin at the center of the current selection, without moving the geometry — and
+everything that follows (rotation, scale, snapping) pivots around that point.
 
-Un objet quelconque, avec ses UV :
+<p align="center">
+  <img src="media/origin-to-selection/demo.gif" width="49%" alt="Demo">
+  <img src="media/origin-to-selection/compare.png" width="49%" alt="Before / after">
+</p>
 
-![Avant](media/color-id-map-generator/before.png)
-
-Un clic sur *Generate Color ID Map* — ici 82 îlots détectés sur 2314 faces :
-
-![Après, ID map appliquée](media/color-id-map-generator/applied.png)
-
-![Turntable de l'ID map](media/color-id-map-generator/turntable.gif)
-
-Et la texture produite, prête à l'export (PNG, résolution au choix jusqu'à 8K) :
-
-![La Color ID map bakée](media/color-id-map-generator/map.png)
-
-Chaque îlot reçoit sa teinte, chaque face une variation autour de cette teinte — on peut donc
-sélectionner soit une pièce entière, soit une face précise, avec le même masque. Le mode *All
-Materials* bake une carte par slot matériau, avec un décalage de teinte entre les slots pour
-que deux matériaux ne partent jamais de la même couleur.
-
-![Panneau Color ID](media/color-id-map-generator/panel.png)
-
-Onglet **Color ID** · `color-id-map-generator/color_id_map_generator.py` · [README](../color-id-map-generator/README.md)
-
----
-
-## 8. Origin to Selection
-
-Le petit outil qu'on utilise cent fois par jour. En mode édition, `Ctrl + Alt + C` place
-l'origine de l'objet au centre de la sélection courante, sans déplacer la géométrie.
-
-![Avant / après](media/origin-to-selection/compare.png)
-
-À gauche, l'origine au centre de l'objet. À droite, après le raccourci : elle est sur la face
-sélectionnée — et tout ce qui suit (rotation, échelle, snapping) pivote autour de ce point.
-
-![Démonstration](media/origin-to-selection/demo.gif)
-
-Ça remplace l'enchaînement manuel *curseur 3D → snap sur la sélection → mode objet → origin to
-cursor → retour en édition*, curseur 3D restauré à sa place au passage. Accessible aussi par
-clic droit dans la vue 3D en mode édition.
+It replaces the manual sequence *3D cursor → snap to selection → object mode → origin to cursor
+→ back to edit mode*, restoring the 3D cursor to where it was along the way. Also available from
+the right-click menu in the 3D view in edit mode.
 
 Extension · `origin-to-selection/` · [README](../origin-to-selection/README.md)
 
@@ -273,6 +208,5 @@ Extension · `origin-to-selection/` · [README](../origin-to-selection/README.md
 
 ## Notes
 
-- Les rendus de ce guide sont faits en EEVEE, vue AgX, éclairage 3 points, sur fond neutre.
-- Chaque GIF a un équivalent `.mp4` à côté (même nom) : à préférer pour un post, la qualité est
-  meilleure et le fichier bien plus léger.
+- Renders use EEVEE, AgX view transform, three-point lighting, neutral background.
+- Animations are GIFs, looping and ping-ponged where it reads better.

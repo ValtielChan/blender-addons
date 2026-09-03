@@ -145,15 +145,15 @@ def bake_color_id_for_slot(context, obj, material_index, image_size, output_path
                            bg_color=(0.0, 0.0, 0.0, 1.0), attr_name="ColorIDMap",
                            hue_offset=0.0):
     if obj.type != 'MESH':
-        raise RuntimeError("L'objet actif n'est pas un mesh.")
+        raise RuntimeError("The active object is not a mesh.")
     if not obj.data.uv_layers:
-        raise RuntimeError("Le mesh n'a pas d'UV map.")
+        raise RuntimeError("The mesh has no UV map.")
     if material_index >= len(obj.material_slots):
-        raise RuntimeError(f"Slot matériau {material_index} inexistant.")
+        raise RuntimeError(f"Material slot {material_index} does not exist.")
 
     target_indices = [p.index for p in obj.data.polygons if p.material_index == material_index]
     if not target_indices:
-        raise RuntimeError(f"Le slot {material_index} ne contient aucune face.")
+        raise RuntimeError(f"Slot {material_index} contains no faces.")
 
     if context.mode != 'OBJECT':
         bpy.ops.object.mode_set(mode='OBJECT')
@@ -363,10 +363,10 @@ class COLORID_OT_generate(Operator):
         obj = context.active_object
 
         if obj is None or obj.type != 'MESH':
-            self.report({'ERROR'}, "Aucun objet actif (mesh).")
+            self.report({'ERROR'}, "No active mesh object.")
             return {'CANCELLED'}
         if not obj.material_slots:
-            self.report({'ERROR'}, "L'objet n'a pas de slots matériau.")
+            self.report({'ERROR'}, "The object has no material slots.")
             return {'CANCELLED'}
 
         if props.bake_all_materials:
@@ -375,7 +375,7 @@ class COLORID_OT_generate(Operator):
             try:
                 slot_indices = [int(props.material_slot)]
             except ValueError:
-                self.report({'ERROR'}, "Slot matériau invalide.")
+                self.report({'ERROR'}, "Invalid material slot.")
                 return {'CANCELLED'}
 
         results = []
@@ -405,7 +405,7 @@ class COLORID_OT_generate(Operator):
             self.report({'WARNING'}, w)
 
         if not results:
-            self.report({'ERROR'}, "Aucun bake n'a abouti.")
+            self.report({'ERROR'}, "No bake succeeded.")
             return {'CANCELLED'}
 
         summary = " | ".join(

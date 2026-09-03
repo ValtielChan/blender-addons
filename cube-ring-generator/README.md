@@ -1,28 +1,30 @@
 # Cube Ring Generator
 
-Génère un anneau de cubes de tailles aléatoires orientés vers l'intérieur, avec des UVs en espace monde.
+Generates a ring of randomly sized cubes facing inward, with world-space UVs.
 
-- Auteur : Muware
-- Version : 1.1.0
-- Blender : 4.5.0+
-- Catégorie : Add Mesh
-- Emplacement : View3D > Sidebar (N) > Cube Ring
-- Fichier : `cube_ring_generator.py`
-- Provenance : Blender 4.5
+- Author: Muware
+- Version: 1.1.0
+- Blender: 4.5.0+
+- Category: Add Mesh
+- Location: View3D > Sidebar (N) > **Cube Ring**
+- File: `cube_ring_generator.py`
+- Origin: Blender 4.5
 
 ## Installation
-Edit > Preferences > Add-ons > Install, sélectionner `cube_ring_generator.py`, puis activer.
+Edit > Preferences > Add-ons > Install, pick `cube_ring_generator.py`, then enable it.
 
 ---
 
-## Aperçu
+## Preview
 
-![Anneau de cubes](../docs/media/cube-ring-generator/hero.png)
+<p align="center">
+  <img src="../docs/media/cube-ring-generator/count.gif" width="32%" alt="Count 8 to 60">
+  <img src="../docs/media/cube-ring-generator/seed.gif" width="32%" alt="Seed variation">
+  <img src="../docs/media/cube-ring-generator/scatter.gif" width="32%" alt="Lateral noise">
+</p>
+<p align="center">
+  <img src="../docs/media/cube-ring-generator/hero.png" width="49%" alt="Cube ring">
+  <img src="../docs/media/cube-ring-generator/panel.png" width="49%" alt="Panel">
+</p>
 
-Nombre de cubes, graine, bruit latéral :
-
-![Count](../docs/media/cube-ring-generator/count.gif)
-![Seed](../docs/media/cube-ring-generator/seed.gif)
-![Scatter](../docs/media/cube-ring-generator/scatter.gif)
-
-[Guide illustré complet](../docs/GUIDE.md#5-cube-ring-generator)
+[Full illustrated guide](../docs/GUIDE.md#5-cube-ring-generator)

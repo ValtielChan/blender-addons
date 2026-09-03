@@ -1,42 +1,42 @@
 # Blender Add-ons
 
-Mes add-ons Blender perso : six générateurs de géométrie procédurale, un bake de Color ID map,
-un raccourci d'édition. Testés sur Blender 5.1.
+My personal Blender add-ons: five procedural geometry generators, a Color ID map baker, and one
+editing shortcut. Tested on Blender 5.1.
 
-**→ [Guide illustré complet](docs/GUIDE.md)** — ce que fait chaque add-on, en images et en GIFs.
+**→ [Full illustrated guide](docs/GUIDE.md)** — what each add-on does, in stills and GIFs.
 
-| Add-on | Ce que ça fait | Onglet | Blender | Dossier |
+| Add-on | What it does | Tab | Blender | Folder |
 |---|---|---|---|---|
-| [Stair Generator](stair-generator/) | Escalier plein manifold, piloté par angle ou par hauteur de marche | Stairs | 4.5+ | `stair-generator/` |
-| [Curve Railing Generator](curve-railing-generator/) | Rambarde le long d'un tracé, tessellation adaptative à la courbure | Railing | 4.5+ | `curve-railing-generator/` |
-| [Low Poly Hex Tree](low-poly-hex-tree/) | Arbre low poly procédural, réglages par niveau de branchement | Tree | 4.2+ | `low-poly-hex-tree/` |
-| [Noise Surface Generator](noise-surface-generator/) | Terrain fBm temps réel, mode tileable sans couture | Noise Surface | 4.0+ | `noise-surface-generator/` |
-| [Cube Ring Generator](cube-ring-generator/) | Anneau de cubes aléatoires, UVs en espace monde | Cube Ring | 4.5+ | `cube-ring-generator/` |
-| [Blade Profile Generator](blade-profile-generator/) | Lame d'épée : profil de largeur, émouture, gorge | Blade | 4.5+ | `blade-profile-generator/` |
-| [Color ID Map Generator](color-id-map-generator/) | Bake d'une Color ID map par îlot UV et par face | Color ID | 4.5+ | `color-id-map-generator/` |
-| [Origin to Selection](origin-to-selection/) | `Ctrl+Alt+C` : origine au centre de la sélection | — | 4.2+ | `origin-to-selection/` |
+| [Stair Generator](stair-generator/) | Solid manifold staircase, driven by slope angle or riser height | Stairs | 4.5+ | `stair-generator/` |
+| [Curve Railing Generator](curve-railing-generator/) | Railing along a path, curvature-adaptive tessellation | Railing | 4.5+ | `curve-railing-generator/` |
+| [Low Poly Hex Tree](low-poly-hex-tree/) | Procedural low poly tree, per-level branching settings | Tree | 4.2+ | `low-poly-hex-tree/` |
+| [Noise Surface Generator](noise-surface-generator/) | Real-time fBm terrain, seamless tileable mode | Noise Surface | 4.0+ | `noise-surface-generator/` |
+| [Cube Ring Generator](cube-ring-generator/) | Ring of random cubes, world-space UVs | Cube Ring | 4.5+ | `cube-ring-generator/` |
+| [Color ID Map Generator](color-id-map-generator/) | Bake a Color ID map per UV island and per face | Color ID | 4.5+ | `color-id-map-generator/` |
+| [Origin to Selection](origin-to-selection/) | `Ctrl+Alt+C`: origin to the center of the selection | — | 4.2+ | `origin-to-selection/` |
 
 <p align="center">
-  <img src="docs/media/curve-railing-generator/deviation.gif" width="49%" alt="Tessellation adaptative">
-  <img src="docs/media/low-poly-hex-tree/seeds.gif" width="49%" alt="Arbres procéduraux">
+  <img src="docs/media/curve-railing-generator/deviation.gif" width="32%" alt="Adaptive tessellation">
+  <img src="docs/media/stair-generator/angle.gif" width="32%" alt="Staircase slope">
+  <img src="docs/media/noise-surface-generator/octaves.gif" width="32%" alt="fBm octaves">
 </p>
 <p align="center">
-  <img src="docs/media/stair-generator/topology.png" width="49%" alt="Topologie de l'escalier">
-  <img src="docs/media/color-id-map-generator/applied.png" width="49%" alt="Color ID map">
+  <img src="docs/media/low-poly-hex-tree/seeds.gif" width="32%" alt="Procedural trees">
+  <img src="docs/media/cube-ring-generator/scatter.gif" width="32%" alt="Cube ring scatter">
+  <img src="docs/media/color-id-map-generator/turntable.gif" width="32%" alt="Color ID map">
 </p>
 
 ## Installation
 
-**Scripts `.py`** (tous sauf Origin to Selection) : `Edit > Preferences > Add-ons` > menu ▾ >
-`Install from Disk`, sélectionner le `.py` du dossier voulu, puis cocher la case.
+**`.py` scripts** (everything except Origin to Selection): `Edit > Preferences > Add-ons` >
+▾ menu > `Install from Disk`, pick the `.py` inside the folder you want, then tick its checkbox.
 
-**Extension** (Origin to Selection) : zipper le dossier `origin-to-selection/` et l'installer
-de la même façon.
+**Extension** (Origin to Selection): zip the `origin-to-selection/` folder and install it the
+same way.
 
-Les panneaux apparaissent dans la sidebar de la vue 3D (touche **N**), chacun sur son onglet.
+Panels show up in the 3D view sidebar (**N** key), each on its own tab.
 
 ## Notes
 
-Les scripts ont été rassemblés depuis mes installations Blender 4.5 et 5.1 pour sauvegarde et
-maintenance. Pour les add-ons présents en plusieurs copies, la version la plus récente a été
-retenue.
+These scripts were gathered from my Blender 4.5 and 5.1 installs for backup and maintenance.
+Where an add-on existed in several copies, the most recent version was kept.

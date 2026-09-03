@@ -1,31 +1,30 @@
 # Noise Surface Generator
 
-Génère une surface avec bruit de Perlin paramétrable en temps réel, puis fige le résultat.
+Generates a surface with real-time tweakable Perlin noise, then freezes the result.
 
-- Auteur : Fabien
-- Version : 1.0.0
-- Blender : 4.0.0+
-- Catégorie : Add Mesh
-- Emplacement : View3D > Sidebar (N) > Noise Surface
-- Fichier : `noise_surface_generator.py`
-- Provenance : Blender 5.1
+- Author: Fabien
+- Version: 1.0.0
+- Blender: 4.0.0+
+- Category: Add Mesh
+- Location: View3D > Sidebar (N) > **Noise Surface**
+- File: `noise_surface_generator.py`
+- Origin: Blender 5.1
 
 ## Installation
-Edit > Preferences > Add-ons > Install, sélectionner `noise_surface_generator.py`, puis activer.
+Edit > Preferences > Add-ons > Install, pick `noise_surface_generator.py`, then enable it.
 
 ---
 
-## Aperçu
+## Preview
 
-![Terrain généré](../docs/media/noise-surface-generator/hero.png)
+<p align="center">
+  <img src="../docs/media/noise-surface-generator/octaves.gif" width="49%" alt="Octaves 1 to 8">
+  <img src="../docs/media/noise-surface-generator/scale.gif" width="49%" alt="Noise scale">
+</p>
+<p align="center">
+  <img src="../docs/media/noise-surface-generator/hero.png" width="32%" alt="Generated terrain">
+  <img src="../docs/media/noise-surface-generator/seamless.png" width="32%" alt="3x3 seamless tiling">
+  <img src="../docs/media/noise-surface-generator/panel.png" width="32%" alt="Panel">
+</p>
 
-Octaves et échelle du bruit :
-
-![Octaves](../docs/media/noise-surface-generator/octaves.gif)
-![Échelle](../docs/media/noise-surface-generator/scale.gif)
-
-Mode seamless — la même tuile répétée 3×3, sans couture :
-
-![Tuilage](../docs/media/noise-surface-generator/seamless.png)
-
-[Guide illustré complet](../docs/GUIDE.md#4-noise-surface-generator)
+[Full illustrated guide](../docs/GUIDE.md#4-noise-surface-generator)

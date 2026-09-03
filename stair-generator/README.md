@@ -1,49 +1,57 @@
 # Stair Generator
 
-Génère un escalier plein, manifold et optimisé (quads partout sauf les deux flancs en n-gons, aucun sommet dupliqué, aucune face interne).
+Generates a solid, manifold, optimized staircase (quads everywhere except the two side n-gons,
+no duplicate vertices, no interior faces).
 
-- Auteur : Muware
-- Version : 1.0.0
-- Blender : 4.5.0+
-- Catégorie : Add Mesh
-- Emplacement : View3D > Sidebar (N) > Stairs
-- Fichier : `stair_generator.py`
-- Provenance : Blender 4.5
+- Author: Muware
+- Version: 1.0.0
+- Blender: 4.5.0+
+- Category: Add Mesh
+- Location: View3D > Sidebar (N) > **Stairs**
+- File: `stair_generator.py`
+- Origin: Blender 4.5
 
-## Utilisation
+## Usage
 
-Les paramètres sont stockés **sur l'objet**, pas sur la scène : chaque escalier garde ses propres réglages.
+Settings are stored **on the object**, not on the scene: every staircase keeps its own.
 
-- Aucun escalier sélectionné → le panneau ne propose que **New Staircase** (créé au curseur 3D, puis sélectionné et actif).
-- Un escalier sélectionné → le panneau édite celui-là, et lui seul.
-- Régénérer conserve la position, la rotation, l'échelle, le parentage et les modifiers : on peut placer d'abord, ajuster ensuite.
-- Shift+D duplique un escalier qui reste éditable indépendamment.
+- No staircase selected → the panel only offers **New Staircase** (created at the 3D cursor,
+  then selected and made active).
+- A staircase selected → the panel edits that one, and only that one.
+- Regenerating preserves location, rotation, scale, parenting and modifiers: place first,
+  adjust later.
+- Shift+D duplicates a staircase that stays independently editable.
 
-## Paramètres
+## Parameters
 
-- **Hauteur totale** et **largeur** de l'escalier.
-- **Marches** : pilotées par hauteur de marche cible (le nombre de marches est arrondi pour tomber juste) ou par nombre direct.
-- **Profondeur** : giron direct ou déduit de l'angle de pente.
-- Panneau *Result* : valeurs réelles construites (nombre de marches, contremarche, giron, angle, longueur) + vérification de confort Blondel (2h + g = 60–64 cm).
+- **Total height** and **width** of the staircase.
+- **Steps**: driven either by a target riser height (the step count is rounded so it lands
+  exactly) or by a direct step count.
+- **Depth**: tread depth given directly, or derived from the slope angle.
+- *Result* panel: the values actually built (step count, riser, going, angle, length) plus a
+  Blondel comfort check (2h + g = 60–64 cm).
 
-Aucune borne arbitraire : seules les valeurs géométriquement absurdes sont interdites (dimensions nulles ou négatives, angle à 0° ou 90°).
+No arbitrary limits: only geometrically absurd values are rejected (zero or negative
+dimensions, an angle of 0° or 90°).
 
 ## Installation
-Edit > Preferences > Add-ons > Install, sélectionner `stair_generator.py`, puis activer.
+
+Edit > Preferences > Add-ons > Install, pick `stair_generator.py`, then enable it.
 
 ---
 
-## Aperçu
+## Preview
 
-![Escalier généré](../docs/media/stair-generator/hero.png)
+<p align="center">
+  <img src="../docs/media/stair-generator/angle.gif" width="49%" alt="Slope angle">
+  <img src="../docs/media/stair-generator/steps.gif" width="49%" alt="Riser height">
+</p>
+<p align="center">
+  <img src="../docs/media/stair-generator/hero.png" width="32%" alt="Generated staircase">
+  <img src="../docs/media/stair-generator/topology.png" width="32%" alt="Topology">
+  <img src="../docs/media/stair-generator/panel.png" width="32%" alt="Panel">
+</p>
 
-Angle de pente et hauteur de marche, en direct :
+15 steps = 64 vertices, 34 faces, 32 of them quads.
 
-![Angle](../docs/media/stair-generator/angle.gif)
-![Marches](../docs/media/stair-generator/steps.gif)
-
-Topologie : 15 marches = 64 sommets, 34 faces dont 32 quads.
-
-![Topologie](../docs/media/stair-generator/topology.png)
-
-[Guide illustré complet](../docs/GUIDE.md#1-stair-generator)
+[Full illustrated guide](../docs/GUIDE.md#1-stair-generator)
