@@ -10,6 +10,11 @@ Generates a surface with real-time tweakable Perlin noise, then freezes the resu
 - File: `noise_surface_generator.py`
 - Origin: Blender 5.1
 
+> **This add-on is free and always will be.** If it saves you some time and you feel like
+> supporting the work, you can buy me a coffee.
+>
+> [![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/valtiel_)
+
 ## Installation
 Edit > Preferences > Add-ons > Install, pick `noise_surface_generator.py`, then enable it.
 

@@ -10,6 +10,11 @@ Generates a ring of randomly sized cubes facing inward, with world-space UVs.
 - File: `cube_ring_generator.py`
 - Origin: Blender 4.5
 
+> **This add-on is free and always will be.** If it saves you some time and you feel like
+> supporting the work, you can buy me a coffee.
+>
+> [![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/valtiel_)
+
 ## Installation
 Edit > Preferences > Add-ons > Install, pick `cube_ring_generator.py`, then enable it.
 

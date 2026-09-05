@@ -6,6 +6,11 @@ shortcut.
 
 Every image below is a real EEVEE render of the geometry the add-ons produce, not a mockup.
 
+> **These add-ons are free and always will be.** If one of them saves you some time and you feel
+> like supporting the work, you can buy me a coffee.
+>
+> [![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/valtiel_)
+
 ## Installation
 
 **`.py` scripts (classic add-ons)**, everything except Origin to Selection:

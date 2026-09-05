@@ -10,6 +10,11 @@ cursor + snap + origin-to-cursor sequence.
 - Type: extension (add-on), `blender_manifest.toml`
 - Category: Mesh
 
+> **This add-on is free and always will be.** If it saves you some time and you feel like
+> supporting the work, you can buy me a coffee.
+>
+> [![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/valtiel_)
+
 ## Shortcut
 
 `Ctrl + Alt + C` in mesh edit mode.

@@ -5,6 +5,11 @@ editing shortcut. Tested on Blender 5.1.
 
 **→ [Full illustrated guide](docs/GUIDE.md)**: what each add-on does, in stills and GIFs.
 
+> **These add-ons are free and always will be.** If one of them saves you some time and you feel
+> like supporting the work, you can buy me a coffee.
+>
+> [![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/valtiel_)
+
 | Add-on | What it does | Tab | Blender | Folder |
 |---|---|---|---|---|
 | [Stair Generator](stair-generator/) | Solid manifold staircase, driven by slope angle or riser height | Stairs | 4.5+ | `stair-generator/` |

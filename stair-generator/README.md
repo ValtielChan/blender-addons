@@ -11,6 +11,11 @@ no duplicate vertices, no interior faces).
 - File: `stair_generator.py`
 - Origin: Blender 4.5
 
+> **This add-on is free and always will be.** If it saves you some time and you feel like
+> supporting the work, you can buy me a coffee.
+>
+> [![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/valtiel_)
+
 ## Usage
 
 Settings are stored **on the object**, not on the scene: every staircase keeps its own.

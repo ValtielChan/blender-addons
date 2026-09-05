@@ -10,6 +10,11 @@ Bakes a Color ID texture per material from the UV islands, with a hue variation 
 - File: `color_id_map_generator.py`
 - Origin: Blender 4.5
 
+> **This add-on is free and always will be.** If it saves you some time and you feel like
+> supporting the work, you can buy me a coffee.
+>
+> [![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/valtiel_)
+
 ## Installation
 Edit > Preferences > Add-ons > Install, pick `color_id_map_generator.py`, then enable it.
 

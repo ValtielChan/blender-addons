@@ -19,6 +19,11 @@ Two ways to lay out a path, detected automatically from the spline type:
 - Location: View3D > Sidebar (N) > **Railing**
 - File: `curve_railing_generator.py`
 
+> **This add-on is free and always will be.** If it saves you some time and you feel like
+> supporting the work, you can buy me a coffee.
+>
+> [![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/valtiel_)
+
 ## Usage
 
 1. *Railing* panel > **New Railing Path**: creates a 2-point path at the 3D cursor along with
